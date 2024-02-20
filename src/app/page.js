@@ -1,95 +1,71 @@
+"use client";
 import Image from "next/image";
 import styles from "./page.module.css";
+import { useState } from "react";
 
 export default function Home() {
+  const [obj, setobj] = useState({
+    name: "",
+    age: "",
+    checkvalue: true,
+    mode: "",
+    car: "",
+  });
+  function onchange(e) {
+    setobj((p) => {
+      return {
+        ...p,
+        [e.target.name]:
+          e.target.name === "checkvalue" ? e.target.checked : e.target.value,
+      };
+    });
+  }
+  // console.log(obj);
+  function onsubmit(e) {
+    e.preventDefault();
+    console.log("submitting form....");
+    console.log(obj);
+  }
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+    <div className="container" onSubmit={onsubmit}>
+      <form>
+        <input type="text" name="name" onChange={onchange} />
+        <input type="text" name="age" onChange={onchange} />
+        <input
+          type="checkbox"
+          name="checkvalue"
+          id="checkvalue"
+          onChange={onchange}
+          checked={obj.checkvalue}
         />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+        <label htmlFor="checkvalue">want to check?</label>
+        <fieldset>
+          <legend>Mode:</legend>
+          <input
+            type="radio"
+            name="mode"
+            value="gaming-mode"
+            onChange={onchange}
+            id="mode"
+          />
+          <label htmlFor="mode">gaming mode</label>
+          <input
+            type="radio"
+            name="mode"
+            value="running-mode"
+            onChange={onchange}
+            id="mode2"
+          />
+          <label htmlFor="mode2">running mode</label>
+        </fieldset>
+        <label htmlFor="carid">Favourate Car?</label>
+        <select name="car" id="carid" onChange={onchange}>
+          <option value="audi">audi</option>
+          <option value="benz">benz</option>
+          <option value="lexus">lexus</option>
+        </select>
+        <button>Submit</button>
+      </form>
+    </div>
   );
 }
